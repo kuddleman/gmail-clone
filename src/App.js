@@ -1,26 +1,38 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { Component, Fragment } from 'react';
+import { BrowserRouter, Route } from 'react-router-dom'
+import EMAILS from './MOCK_DATA.json'
+import Inbox from './components/Inbox'
+import EmailRead from './components/EmailRead'
+import Nav from './components/Nav'
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+export default class App extends Component {
+
+  constructor(props) {
+    super(props) 
+    this.state = {
+      emails: EMAILS
+    }
+  }
+
+  render() {
+    return (
+      <div className="App">
+        
+        <BrowserRouter>
+          <Fragment>
+            <Nav />
+            <Route exact path="/" component={ () => (
+              <Inbox emails={ this.state.emails } />
+            )} />
+            <Route exact path="/read/:id" component={ () => (
+              <EmailRead emails={ this.state.emails }/>
+            )}/>
+          </Fragment>
+        </BrowserRouter>
+      </div>
+    )
+  }
 }
 
-export default App;
+
