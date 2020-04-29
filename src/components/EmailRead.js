@@ -3,6 +3,11 @@ import { withRouter, Link } from 'react-router-dom'
 
 class EmailRead extends Component {
 
+  componentWillUnmount() {
+    const emailId = this.props.match.params.id
+    this.props.markRead(emailId)
+  }
+
   render() {
     const emailId = this.props.match.params.id;
     const email = this.props.emails.filter(email => {
@@ -22,7 +27,7 @@ class EmailRead extends Component {
         <h1>{ email.subject }</h1>
         <h3>{ email.date} { ' ' } { email.email }</h3>
         <p>{ email.body.split('\n\n').map((paragraphText, index) => {
-              return <p key={ index }>{ paragraphText }</p>
+              return <span key={ index }>{ paragraphText }</span>
              }) 
             }
         </p>
